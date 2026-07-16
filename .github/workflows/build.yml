@@ -61,13 +61,9 @@ jobs:
       - name: Sign APK
         run: |
           # Find the unsigned APK
-          ls
-          ls app
-          ls app/build
-          ls app/build/outputs
-          ls app/build/outputs/apk
-          ls app/build/outputs/apk/debug
-          APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -1)
+          
+          ls app/build/outputs/apk/github
+          APK_PATH=$(find app/build/outputs/apk/github -name "*.apk" | head -1)
           
           # Sign the APK using apksigner
           $ANDROID_HOME/build-tools/34.0.0/apksigner sign \
@@ -75,11 +71,11 @@ jobs:
             --ks-key-alias androiddebugkey \
             --ks-pass pass:android \
             --key-pass pass:android \
-            --out app/build/outputs/apk/debug/app-debug-signed.apk \
+            --out app/build/outputs/apk/github/app-debug-signed.apk \
             "$APK_PATH"
           
           # Verify the signature
-          $ANDROID_HOME/build-tools/34.0.0/apksigner verify app/build/outputs/apk/debug/app-debug-signed.apk
+          $ANDROID_HOME/build-tools/34.0.0/apksigner verify app/build/outputs/apk/github/app-debug-signed.apk
 
       - name: Get version from tag
         id: version
@@ -92,13 +88,13 @@ jobs:
 
       - name: Rename APK
         run: |
-          mv app/build/outputs/apk/debug/app-debug-signed.apk \
-             app/build/outputs/apk/debug/app-${{ steps.version.outputs.version }}.apk
+          mv app/build/outputs/apk/github/app-debug-signed.apk \
+             app/build/outputs/apk/github/app-${{ steps.version.outputs.version }}.apk
 
       - name: Get APK info
         id: apk_info
         run: |
-          APK_PATH="app/build/outputs/apk/debug/app-${{ steps.version.outputs.version }}.apk"
+          APK_PATH="app/build/outputs/apk/github/app-${{ steps.version.outputs.version }}.apk"
           APK_SIZE=$(stat -c%s "$APK_PATH")
           APK_SIZE_MB=$(echo "scale=2; $APK_SIZE / 1024 / 1024" | bc)
           
