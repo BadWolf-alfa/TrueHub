@@ -44,8 +44,8 @@ android {
     productFlavors {
         create("playstore") {
             dimension = "store"
-            applicationId = "com.imnotndesh.truehub.app"
-            buildConfigField("Boolean", "IS_PLAYSTORE_BUILD", "true")
+            applicationId = "com.imnotndesh.truehub"
+            buildConfigField("Boolean", "IS_PLAYSTORE_BUILD", "false")
         }
         create("github") {
             dimension = "store"
