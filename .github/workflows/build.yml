@@ -2,8 +2,7 @@ name: Build and Release Android App
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [main, issues-hotfixes]
   workflow_dispatch:
 
 jobs:
@@ -62,6 +61,12 @@ jobs:
       - name: Sign APK
         run: |
           # Find the unsigned APK
+          ls
+          ls app
+          ls app/build
+          ls app/build/outputs
+          ls app/build/outputs/apk
+          ls app/build/outputs/apk/debug
           APK_PATH=$(find app/build/outputs/apk/debug -name "*.apk" | head -1)
           
           # Sign the APK using apksigner
